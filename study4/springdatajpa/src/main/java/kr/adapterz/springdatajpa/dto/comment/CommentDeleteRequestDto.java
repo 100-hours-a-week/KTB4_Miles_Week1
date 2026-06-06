@@ -1,0 +1,13 @@
+package kr.adapterz.springdatajpa.dto.comment;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+public class CommentDeleteRequestDto {
+    private Long user_id;
+    private String access_session;
+    private Long post_id;
+    private Long comment_id;
+}
