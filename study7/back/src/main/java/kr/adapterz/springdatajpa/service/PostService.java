@@ -45,10 +45,10 @@ public class PostService {
         List<PostListResponseDto> result = new ArrayList<>();
 
         for (Post post : posts.getContent()) {
-            result.add(new PostListResponseDto(post, post.getUser()));
+            result.add(PostResponseFactory.createListResponse(post));
         }
 
-        return new PostPageResponseDto(result, posts.hasNext());
+        return PostResponseFactory.createPageResponse(result, posts.hasNext());
     }
 
     // 게시물 추가
@@ -153,16 +153,6 @@ public class PostService {
         return new LikeCancelResponseDto(post.getLikeCount());
     }
 
-    //게시글 신고
-    @Transactional
-    public ReportResponseDto reportPost (Long postId, String authorizationHeader){
-        getLoginUser(authorizationHeader);
-        Post post = getActivePost(postId);
-
-        post.report();
-        ReportResponseDto reportResponseDto = new ReportResponseDto(post.getReportCount());
-        return reportResponseDto;
-    }
 
     private User getLoginUser(String authorizationHeader) {
         Long loginUserId = jwtProvider.getUserIdFromAuthorizationHeader(authorizationHeader);
