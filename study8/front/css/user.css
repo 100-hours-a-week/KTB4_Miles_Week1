@@ -2,7 +2,10 @@
 .password-edit-page {
   min-height: 100vh;
   background:
-    linear-gradient(135deg, rgba(15, 183, 181, 0.08), transparent 340px),
+    url("../assets/images/bamboo-watermark.svg") right -140px bottom -160px / min(52vw, 520px) auto no-repeat,
+    radial-gradient(circle at 14% 14%, rgba(213, 230, 117, 0.3), transparent 300px),
+    linear-gradient(135deg, rgba(111, 191, 115, 0.18), transparent 340px),
+    linear-gradient(180deg, rgba(47, 143, 85, 0.08), transparent 520px),
     var(--color-bg);
 }
 
@@ -84,7 +87,7 @@
   padding: 20px;
   border: 1px dashed var(--color-line-strong);
   border-radius: var(--radius-md);
-  background: #fbfdfe;
+  background: #fbfff7;
 }
 
 .profile-image-label,
@@ -103,18 +106,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-line);
+  border: 1px solid rgba(92, 158, 112, 0.28);
   border-radius: 50%;
-  background: linear-gradient(135deg, #d9f4f4, #ffe6b8);
+  background: #eef6ef url("../assets/images/default-avatar.svg") center / cover no-repeat;
   overflow: hidden;
   cursor: pointer;
 }
 
 .profile-image-box::before {
-  content: "프로필";
-  color: var(--color-teal-dark);
-  font-size: 14px;
-  font-weight: 800;
+  content: "";
 }
 
 .profile-edit-image {
@@ -142,7 +142,7 @@
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.75);
   border-radius: 999px;
-  background: rgba(6, 26, 50, 0.72);
+  background: rgba(16, 36, 25, 0.78);
   color: #ffffff;
 }
 
@@ -170,7 +170,7 @@
   align-items: center;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
-  background: #f8fbfc;
+  background: #f7fbef;
   color: var(--color-muted);
   font-size: 14px;
 }
@@ -182,7 +182,7 @@
   padding: 0 14px;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
-  background: #fbfdfe;
+  background: #fbfff7;
   color: var(--color-text);
   font-size: 14px;
   outline: none;
@@ -196,7 +196,7 @@
 .profile-form-input:focus,
 .password-input:focus {
   border-color: var(--color-teal);
-  box-shadow: 0 0 0 3px rgba(15, 183, 181, 0.12);
+  box-shadow: 0 0 0 3px rgba(111, 191, 115, 0.24);
 }
 
 .profile-helper-text,
@@ -215,7 +215,7 @@
   min-height: 44px;
   border-radius: var(--radius-sm);
   background: var(--color-teal);
-  color: #ffffff;
+  color: var(--color-text);
   font-size: 14px;
   font-weight: 800;
   cursor: pointer;
@@ -223,11 +223,11 @@
 
 .profile-submit-button:hover,
 .password-edit-button:not(:disabled):hover {
-  background: var(--color-teal-dark);
+  background: var(--color-amber);
 }
 
 .password-edit-button:disabled {
-  background: #c7d9df;
+  background: #b9c8b2;
   cursor: not-allowed;
 }
 

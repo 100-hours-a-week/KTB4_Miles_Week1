@@ -4,7 +4,10 @@
 .post-edit-page {
   min-height: 100vh;
   background:
-    linear-gradient(180deg, rgba(15, 183, 181, 0.06), transparent 280px),
+    url("../assets/images/bamboo-watermark.svg") right -140px bottom -160px / min(52vw, 520px) auto no-repeat,
+    radial-gradient(circle at 16% 16%, rgba(213, 230, 117, 0.28), transparent 300px),
+    linear-gradient(180deg, rgba(111, 191, 115, 0.16), transparent 280px),
+    linear-gradient(135deg, rgba(47, 143, 85, 0.08), transparent 520px),
     var(--color-bg);
 }
 
@@ -86,7 +89,7 @@
 .post-create-submit-button:not(:disabled),
 .post-edit-submit-button {
   background: var(--color-teal);
-  color: #ffffff;
+  color: var(--color-text);
   cursor: pointer;
 }
 
@@ -94,7 +97,7 @@
 .comment-submit-button:not(:disabled):hover,
 .post-create-submit-button.is-active:hover,
 .post-edit-submit-button:hover {
-  background: var(--color-teal-dark);
+  background: var(--color-amber);
 }
 
 .evaluation-list-header,
@@ -109,7 +112,7 @@
   min-height: 40px;
   padding: 0 18px;
   border-bottom: 1px solid var(--color-line);
-  background: #f8fbfc;
+  background: #f7fbef;
   color: var(--color-muted);
   font-size: 12px;
   font-weight: 800;
@@ -132,7 +135,7 @@
 .post-card:hover {
   position: relative;
   z-index: 1;
-  background: #f2fbfb;
+  background: #e9f7df;
   box-shadow: inset 3px 0 0 var(--color-teal);
 }
 
@@ -148,8 +151,9 @@
 .comment-author-image-box {
   width: 34px;
   height: 34px;
+  border: 1px solid rgba(92, 158, 112, 0.28);
   border-radius: 50%;
-  background: linear-gradient(135deg, #d9f4f4, #ffe6b8);
+  background: #eef6ef;
   overflow: hidden;
   flex: 0 0 auto;
 }
@@ -157,15 +161,11 @@
 .post-card__author-image-box.is-empty::before,
 .detail-author-image-box.is-empty::before,
 .comment-author-image-box.is-empty::before {
-  content: "학";
-  display: flex;
+  content: "";
+  display: block;
   width: 100%;
   height: 100%;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-teal-dark);
-  font-size: 12px;
-  font-weight: 800;
+  background: url("../assets/images/default-avatar.svg") center / cover no-repeat;
 }
 
 .post-card__author-image-box.is-empty .post-card__author-image,
@@ -241,9 +241,8 @@
 
 .detail-post-title {
   margin: 0;
-  padding: 22px 24px 0;
+  padding: 22px 24px 14px;
   border: 1px solid var(--color-line);
-  border-bottom: 0;
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   background: #ffffff;
   color: var(--color-text);
@@ -253,25 +252,32 @@
 }
 
 .detail-author-area {
-  padding: 14px 24px 18px;
+  min-height: 58px;
+  padding: 14px 24px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
   border-right: 1px solid var(--color-line);
   border-left: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
   background: #ffffff;
 }
 
 .detail-created-at {
-  margin: 0 0 0 8px;
+  margin: 0 0 0 auto;
 }
 
 .detail-post-actions {
-  margin-top: -62px;
-  padding-right: 24px;
+  margin: 0;
+  padding: 10px 24px;
   display: flex;
   justify-content: flex-end;
   gap: 8px;
+  border-right: 1px solid var(--color-line);
+  border-left: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+  background: #ffffff;
   pointer-events: none;
 }
 
@@ -291,12 +297,17 @@
 .detail-small-button:hover,
 .comment-action-button:hover {
   border-color: var(--color-teal);
-  color: var(--color-teal-dark);
+  color: var(--color-text);
+  background: var(--color-bg-soft);
 }
 
 .detail-divider {
   height: 1px;
   background: var(--color-line);
+}
+
+.detail-divider--top {
+  display: none;
 }
 
 .detail-divider--comment-top {
@@ -307,7 +318,7 @@
   max-height: 420px;
   border-right: 1px solid var(--color-line);
   border-left: 1px solid var(--color-line);
-  background: #eff6f8;
+  background: #edf5e6;
   overflow: hidden;
 }
 
@@ -354,7 +365,7 @@
   justify-content: center;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
-  background: #fbfdfe;
+  background: #fbfff7;
 }
 
 button.detail-stat-card {
@@ -362,8 +373,8 @@ button.detail-stat-card {
 }
 
 button.detail-stat-card.is-liked {
-  border-color: #ffe1a6;
-  background: #fff8e8;
+  border-color: var(--color-teal);
+  background: #e1f2d1;
 }
 
 .detail-stat-number {
@@ -409,7 +420,7 @@ button.detail-stat-card.is-liked {
 .comment-submit-button {
   float: right;
   margin: 10px;
-  background: #c7d9df;
+  background: #b9c8b2;
   color: #ffffff;
   cursor: not-allowed;
 }
@@ -501,7 +512,7 @@ button.detail-stat-card.is-liked {
   width: 100%;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
-  background: #fbfdfe;
+  background: #fbfff7;
   color: var(--color-text);
   outline: none;
 }
@@ -533,7 +544,7 @@ button.detail-stat-card.is-liked {
 .post-create-content-input:focus,
 .post-content-input:focus {
   border-color: var(--color-teal);
-  box-shadow: 0 0 0 3px rgba(15, 183, 181, 0.12);
+  box-shadow: 0 0 0 3px rgba(111, 191, 115, 0.24);
 }
 
 .post-edit-line {
@@ -568,7 +579,8 @@ button.detail-stat-card.is-liked {
 .post-create-file-button:hover,
 .post-image-file-button:hover {
   border-color: var(--color-teal);
-  color: var(--color-teal-dark);
+  color: var(--color-text);
+  background: var(--color-bg-soft);
 }
 
 .post-create-file-name,
@@ -587,7 +599,7 @@ button.detail-stat-card.is-liked {
   width: 100%;
   min-height: 44px;
   margin-top: 8px;
-  background: #c7d9df;
+  background: #b9c8b2;
   color: #ffffff;
   cursor: not-allowed;
 }

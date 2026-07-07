@@ -27,27 +27,27 @@
 }
 
 :root {
-  --color-navy-950: #061a32;
-  --color-navy-900: #08213f;
-  --color-navy-800: #0e3057;
+  --color-navy-950: #102419;
+  --color-navy-900: #193826;
+  --color-navy-800: #28543a;
   --color-surface: #ffffff;
-  --color-bg: #f3f9fb;
-  --color-bg-soft: #eaf6f8;
-  --color-line: #dbe8ee;
-  --color-line-strong: #c8d8e0;
-  --color-text: #12243a;
-  --color-muted: #607287;
-  --color-subtle: #8da0b3;
-  --color-teal: #0fb7b5;
-  --color-teal-dark: #078b91;
-  --color-amber: #f6a609;
-  --color-green: #1f9d55;
-  --color-green-soft: #e8f8ee;
-  --color-coral: #ff6348;
-  --color-coral-soft: #fff0ed;
-  --color-blue-soft: #eaf5ff;
-  --shadow-soft: 0 12px 36px rgba(8, 33, 63, 0.08);
-  --shadow-panel: 0 1px 2px rgba(8, 33, 63, 0.06);
+  --color-bg: #f3f8ed;
+  --color-bg-soft: #e4f2d4;
+  --color-line: #cddfc5;
+  --color-line-strong: #a8c99f;
+  --color-text: #14231a;
+  --color-muted: #62705f;
+  --color-subtle: #8ba084;
+  --color-teal: #6fbf73;
+  --color-teal-dark: #256b3b;
+  --color-amber: #d5e675;
+  --color-green: #2f8f55;
+  --color-green-soft: #e7f4de;
+  --color-coral: #c65e45;
+  --color-coral-soft: #fff1e9;
+  --color-blue-soft: #eef5ea;
+  --shadow-soft: 0 16px 42px rgba(25, 56, 38, 0.12);
+  --shadow-panel: 0 1px 2px rgba(25, 56, 38, 0.08);
   --radius-sm: 6px;
   --radius-md: 8px;
 }
@@ -94,10 +94,10 @@ a {
   display: flex;
   align-items: center;
   gap: 18px;
-  background: linear-gradient(90deg, var(--color-navy-950), var(--color-navy-900));
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  box-shadow: 0 8px 22px rgba(6, 26, 50, 0.16);
+  background: rgba(248, 252, 243, 0.96);
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-text);
+  box-shadow: 0 8px 22px rgba(25, 56, 38, 0.08);
 }
 
 .page-header::before {
@@ -107,15 +107,17 @@ a {
   border-radius: 10px;
   flex: 0 0 auto;
   background:
-    radial-gradient(circle at 36% 37%, transparent 18%, #061a32 19% 25%, transparent 26%),
-    linear-gradient(135deg, #0fc6bf, #21d49a);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    url("../assets/images/bamboo-logo.svg") center / 24px 24px no-repeat,
+    linear-gradient(135deg, #f8fff0, #dff0d4);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.86),
+    0 0 0 1px rgba(37, 107, 59, 0.22);
 }
 
 .page-header__title {
   min-width: 200px;
   margin: 0;
-  color: #ffffff;
+  color: var(--color-text);
   font-size: 24px;
   font-weight: 800;
   line-height: 1.1;
@@ -123,10 +125,10 @@ a {
 }
 
 .page-header__title::before {
-  content: "LECTURE FEEDBACK";
+  content: "BAMBOO FOREST";
   display: block;
   margin-bottom: 3px;
-  color: #93f2ea;
+  color: var(--color-teal-dark);
   font-size: 11px;
   font-weight: 700;
   line-height: 1;
@@ -144,25 +146,19 @@ a {
   width: 38px;
   height: 38px;
   padding: 0;
-  border: 2px solid rgba(255, 255, 255, 0.75);
+  border: 2px solid rgba(92, 158, 112, 0.5);
   border-radius: 50%;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
-    var(--color-navy-800);
+  background: #eef6ef;
   overflow: hidden;
   cursor: pointer;
 }
 
 .header-profile__button.is-empty::before {
-  content: "김";
-  display: flex;
+  content: "";
+  display: block;
   width: 100%;
   height: 100%;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: 800;
+  background: url("../assets/images/default-avatar.svg") center / cover no-repeat;
 }
 
 .header-profile__button.is-empty .header-profile__image {
@@ -229,9 +225,9 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(37, 107, 59, 0.28);
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(111, 191, 115, 0.16);
   cursor: pointer;
 }
 
@@ -239,8 +235,8 @@ a {
 .back-button__icon {
   width: 10px;
   height: 10px;
-  border-left: 2px solid #ffffff;
-  border-bottom: 2px solid #ffffff;
+  border-left: 2px solid var(--color-text);
+  border-bottom: 2px solid var(--color-text);
   transform: rotate(45deg);
 }
 
@@ -255,7 +251,7 @@ body.modal-open {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(6, 26, 50, 0.48);
+  background: rgba(17, 17, 17, 0.58);
   backdrop-filter: blur(4px);
 }
 
@@ -310,7 +306,7 @@ body.modal-open {
 
 .confirm-modal__button--confirm {
   background: var(--color-teal);
-  color: #ffffff;
+  color: var(--color-text);
 }
 
 @media (max-width: 760px) {
