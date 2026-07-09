@@ -10,13 +10,14 @@ const authorImage = document.querySelector("#authorImage");
 const authorNickname = document.querySelector("#authorNickname");
 const postCreatedAt = document.querySelector("#postCreatedAt");
 const postImageBox = document.querySelector("#postImageBox");
-const postImage = document.querySelector("#postImage");
 const postContent = document.querySelector("#postContent");
 
 const likeButton = document.querySelector("#likeButton");
 const likeCount = document.querySelector("#likeCount");
 const viewCount = document.querySelector("#viewCount");
 const commentCount = document.querySelector("#commentCount");
+const reportButton = document.querySelector("#reportButton");
+const reportCount = document.querySelector("#reportCount");
 
 const commentForm = document.querySelector("#commentForm");
 const commentInput = document.querySelector("#commentInput");
@@ -89,6 +90,18 @@ function formatDateTime(dateTimeValue) {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
+function normalizePostImageUrls(rawPost) {
+  if (Array.isArray(rawPost.imageFiles) && rawPost.imageFiles.length > 0) {
+    return rawPost.imageFiles.filter((imageUrl) => Boolean(imageUrl));
+  }
+
+  if (rawPost.imageFile) {
+    return [rawPost.imageFile];
+  }
+
+  return [];
+}
+
 function normalizePostForDetail(rawPost) {
   return {
     postId: rawPost.postId,
@@ -98,12 +111,14 @@ function normalizePostForDetail(rawPost) {
     authorProfileImage: rawPost.userProfileImage ?? null,
     createdAt: rawPost.createdAt ?? new Date().toISOString(),
     imageUrl: rawPost.imageFile ?? null,
-    imageUrls: rawPost.imageFiles ?? [],
+  imageUrls: normalizePostImageUrls(rawPost),
     content: rawPost.postContent ?? "",
     likeCount: rawPost.likeCount ?? 0,
+    reportCount: rawPost.reportCount ?? 0,
     viewCount: rawPost.viewCount ?? 0,
     commentCount: rawPost.replyCount ?? 0,
     isLiked: rawPost.isLiked ?? false,
+    isReported: rawPost.isReported ?? false,
     comments: rawPost.comments ?? [],
   };
 }
@@ -147,29 +162,55 @@ function renderPost() {
   const isMyPost = isCurrentUserPost();
   setPostActionsVisible(isMyPost);
 
+  reportCount.textContent = formatCount(post.reportCount);
   likeCount.textContent = formatCount(post.likeCount);
   viewCount.textContent = formatCount(post.viewCount);
   commentCount.textContent = formatCount(comments.length);
 
-  if (post.isLiked) {
-    likeButton.classList.add("is-liked");
-  } else {
-    likeButton.classList.remove("is-liked");
-  }
+  if (post.isReported) {
+  reportButton.classList.add("is-reported");
+  reportButton.disabled = true;
+} else {
+  reportButton.classList.remove("is-reported");
+  reportButton.disabled = false;
+}
+
+if (isCurrentUserPost()) {
+  reportButton.disabled = true;
+  reportButton.classList.add("is-disabled");
+} else {
+  reportButton.classList.remove("is-disabled");
+}
+
+if (post.isLiked) {
+  likeButton.classList.add("is-liked");
+} else {
+  likeButton.classList.remove("is-liked");
+}
 
   setImage(authorImageBox, authorImage, post.authorProfileImage);
 
-  const firstImageUrl = post.imageUrls.length > 0
-    ? post.imageUrls[0]
-    : post.imageUrl;
+  renderPostImages(post.imageUrls);
+}
 
-  if (!firstImageUrl) {
+function renderPostImages(imageUrls) {
+  postImageBox.innerHTML = "";
+
+  if (!Array.isArray(imageUrls) || imageUrls.length === 0) {
     postImageBox.classList.add("is-hidden");
-    postImage.removeAttribute("src");
-  } else {
-    postImageBox.classList.remove("is-hidden");
-    postImage.src = firstImageUrl;
+    return;
   }
+
+  postImageBox.classList.remove("is-hidden");
+
+  imageUrls.forEach((imageUrl, index) => {
+    const imageElement = document.createElement("img");
+    imageElement.className = "detail-post-image";
+    imageElement.src = imageUrl;
+    imageElement.alt = `글 첨부 이미지 ${index + 1}`;
+
+    postImageBox.appendChild(imageElement);
+  });
 }
 
 function createCommentItem(comment) {
@@ -353,6 +394,54 @@ postDeleteButton.addEventListener("click", () => {
       } catch (error) {
         console.error("글 삭제 실패:", error);
         alert("글 삭제에 실패했습니다. 작성자 본인인지 확인해주세요.");
+      }
+    },
+  });
+});
+
+reportButton.addEventListener("click", () => {
+  if (!post || !post.postId) {
+    console.error("신고할 글 ID가 없습니다.", post);
+    return;
+  }
+
+  if (isCurrentUserPost()) {
+    alert("본인이 작성한 글은 신고할 수 없습니다.");
+    return;
+  }
+
+  if (post.isReported) {
+    alert("이미 신고한 글입니다.");
+    return;
+  }
+
+  openModal({
+    title: "글을 신고하겠습니까?",
+    description: "신고 후에는 취소할 수 없습니다.",
+    onConfirm: async () => {
+      try {
+        const result = await api.reportPost(post.postId);
+
+        post.isReported = true;
+        post.reportCount = result?.reportCount ?? post.reportCount + 1;
+
+        renderPost();
+      } catch (error) {
+        console.error("글 신고 실패:", error);
+
+        if (error.message === "Already_Reported") {
+          post.isReported = true;
+          renderPost();
+          alert("이미 신고한 글입니다.");
+          return;
+        }
+
+        if (error.message === "Cannot_Report_Own_Post") {
+          alert("본인이 작성한 글은 신고할 수 없습니다.");
+          return;
+        }
+
+        alert("글 신고에 실패했습니다.");
       }
     },
   });
